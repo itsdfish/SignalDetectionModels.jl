@@ -1,9 +1,17 @@
 name = "SignalDetectionModels"
 uuid = "1177497a-bfcb-4701-b32d-ffcd4fa2eaa8"
-authors = ["itsdfish <itsdfish@gmail.com> and contributors"]
-version = "1.0.0-DEV"
+version = "0.1.0"
+authors = ["itsdfish"]
+
+[deps]
+ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+SafeTestsets = "1bc83da4-3b8d-516f-aca4-4fe02f6d838f"
 
 [compat]
+ArgCheck = "2.5.0"
+Distributions = "0.25.122"
+SafeTestsets = "0.1.0"
 julia = "1.6.7"
 
 [extras]

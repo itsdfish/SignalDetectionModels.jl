@@ -1,6 +1,3 @@
-using SignalDetectionModels
-using Test
+using SafeTestsets
 
-@testset "SignalDetectionModels.jl" begin
-    # Write your tests here.
-end
+include("tests.jl")
