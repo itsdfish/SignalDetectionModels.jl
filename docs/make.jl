@@ -16,7 +16,7 @@ makedocs(;
     ),
     modules = [
         SignalDetectionModels,
-        #Base.get_extension(SignalDetectionModels, :PlotsExt)
+    #Base.get_extension(SignalDetectionModels, :PlotsExt)
     ],
     pages = [
         "Home" => "index.md",

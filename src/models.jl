@@ -63,16 +63,27 @@ function compute_d(model::AbstractSDT)
     (; σₛ) = model
     hr = compute_hr(model)
     far = compute_far(model)
-    return compute_d(hr::Real, far::Real)
+    return compute_d(hr, far, σₛ)
 end
 
-function compute_d(hr::Real, far::Real)
-    return invlogcdf(Normal(0, 1), log(hr)) - invlogcdf(Normal(0, 1), log(far))
+function compute_d(hr::Real, far::Real, σₛ = 1.0)
+    v = 1/√((1 + σₛ^2) / 2)
+    dist = Normal(0, 1)
+    return v * (σₛ * invlogcdf(dist, log(hr)) - invlogcdf(dist, log(far)))
 end
+
 function compute_c(model::AbstractSDT)
+    (; σₛ) = model
     hr = compute_hr(model)
     far = compute_far(model)
-    return -(invlogcdf(Normal(0, 1), log(hr)) + invlogcdf(Normal(0, 1), log(far))) / 2
+    return compute_c(hr, far, σₛ)
+end
+
+function compute_c(hr::Real, far::Real, σₛ = 1.0)
+    v1 = 1 / √((1 + σₛ^2) / 2)
+    v2 = -σₛ / (1 + σₛ)
+    dist = Normal(0, 1)
+    return v1 * v2 * (invlogcdf(dist, log(hr)) + invlogcdf(dist, log(far)))
 end
 
 function compute_b(model::AbstractSDT)

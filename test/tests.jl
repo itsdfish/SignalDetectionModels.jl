@@ -82,3 +82,34 @@ end
         @test far ≈ 0.02 atol = 1e-3
     end
 end
+
+@safetestset "compute_d" begin
+    using Distributions
+    using SignalDetectionModels
+    using Test
+
+    for _ ∈ 1:100
+        d = rand(Uniform(0, 3))
+        c = rand(Uniform(-2, 2))
+        σₛ = rand(Uniform(1, 2))
+        model = SDT(; d, c, σₛ, nₙ = 100)
+
+        d_test = compute_d(model)
+        @test d ≈ d_test
+    end
+end
+
+@safetestset "compute_c" begin
+    using Distributions
+    using SignalDetectionModels
+    using Test
+
+    for _ ∈ 1:100
+        d = rand(Uniform(0, 3))
+        c = rand(Uniform(-2, 2))
+        σₛ = rand(Uniform(1, 2))
+        model = SDT(; d, c, σₛ, nₙ = 100)
+        c_test = compute_c(model)
+        @test c ≈ c_test
+    end
+end

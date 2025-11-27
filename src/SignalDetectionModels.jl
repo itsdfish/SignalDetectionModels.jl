@@ -7,6 +7,7 @@ import Distributions: loglikelihood
 import Distributions: rand
 
 export compute_d
+export compute_c
 export compute_far
 export compute_hr
 export SDT
