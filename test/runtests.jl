@@ -1,3 +1,5 @@
 using SafeTestsets
 
-include("tests.jl")
+files = readdir()
+filter!(f -> f ≠ "runtests.jl" && contains(f, ".jl"), files)
+include.(files)
