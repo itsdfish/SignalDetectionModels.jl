@@ -113,3 +113,38 @@ end
         @test c ≈ c_test
     end
 end
+
+@safetestset "logpdf" begin
+    using Distributions
+    using Random
+    using SignalDetectionModels
+    using Test
+
+    Θ = (
+        d = 1.5,
+        c = 0.0,
+        σₛ = 1.5,
+        nₙ = 100_000
+    )
+
+    Random.seed!(65)
+    ds = range(0.8 * Θ.d, 1.2 * Θ.d, length = 100)
+    cs = range(0.8 * Θ.c, 1.2 * Θ.c, length = 100)
+    σₛs = range(0.8 * Θ.σₛ, 1.2 * Θ.σₛ, length = 100)
+    ℒ = loglikelihood
+
+    model = SDT(; Θ...)
+    data = rand(model)
+
+    LLs = map(d -> ℒ(SDT(; Θ..., d), data), ds)
+    _, mi = findmax(LLs)
+    @test Θ.d ≈ ds[mi] rtol = 0.02
+
+    LLs = map(c -> ℒ(SDT(; Θ..., c), data), cs)
+    _, mi = findmax(LLs)
+    @test Θ.c ≈ cs[mi] rtol = 0.02
+
+    LLs = map(σₛ -> ℒ(SDT(; Θ..., σₛ), data), σₛs)
+    _, mi = findmax(LLs)
+    @test Θ.σₛ ≈ σₛs[mi] rtol = 0.05
+end
