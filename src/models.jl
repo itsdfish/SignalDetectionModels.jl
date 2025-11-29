@@ -103,6 +103,15 @@ Computes discriminability `d`.
 - `hr::Real`: hit rate 
 - `far::Real`: false alarm rate 
 - `σₛ = 1.0`: standard deviation of the signal distribution 
+
+# Example 
+
+```julia
+using SignalDetectionModels
+hr = .90
+far = .05
+compute_d(hr, far)
+```
 """
 function compute_d(hr::Real, far::Real, σₛ = 1.0)
     v = 1/√((1 + σₛ^2) / 2)
@@ -136,6 +145,15 @@ Computes criterion `c`.
 - `hr::Real`: hit rate 
 - `far::Real`: false alarm rate 
 - `σₛ = 1.0`: standard deviation of the signal distribution 
+
+# Example 
+
+```julia
+using SignalDetectionModels
+hr = .90
+far = .05
+compute_c(hr, far)
+```
 """
 function compute_c(hr::Real, far::Real, σₛ = 1.0)
     v1 = 1 / √((1 + σₛ^2) / 2)
@@ -156,6 +174,14 @@ Generates simulated data from model.
 # Returns 
 
 - `data::Vector{Int}`: data vector containing the hit count and false alarm count
+
+# Example 
+
+```julia
+using SignalDetectionModels
+model = SDT(; d = 2.0, c = 0.0, nₙ = 100)
+data = rand(model)
+```
 """
 function rand(model::AbstractSDT)
     (; nₛ, nₙ) = model
@@ -173,6 +199,15 @@ Compute log likelihood of data based on signal detection theory model.
 
 - `model::AbstractSDT`: abstract signal detection theory model 
 - `data::Vector{Int}`: data vector containing the hit count and false alarm count
+
+# Example 
+
+```julia
+using SignalDetectionModels
+model = SDT(; d = 2.0, c = 0.0, nₙ = 100)
+data = rand(model)
+LL = logpdf(model, data)
+```
 """
 function logpdf(model::AbstractSDT, data::Vector{Int})
     (; nₛ, nₙ) = model

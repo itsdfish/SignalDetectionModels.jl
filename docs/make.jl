@@ -16,10 +16,14 @@ makedocs(;
     ),
     modules = [
         SignalDetectionModels,
-    #Base.get_extension(SignalDetectionModels, :PlotsExt)
+        Base.get_extension(SignalDetectionModels, :PlotsExt)
     ],
     pages = [
         "Home" => "index.md",
+        "Basic Usage" => "basic_usage.md",
+        "Plotting" => "plotting.md",
+        "Hierarchical Model" => "hierarchical_model.md",
+        "API" => "api.md"
     ]
 )
 
