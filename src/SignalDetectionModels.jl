@@ -22,6 +22,7 @@ export plot_iso_bias
 export plot_ROC
 export plot_zROC
 
+include("structs.jl")
 include("models.jl")
 include("ext_functions.jl")
 end

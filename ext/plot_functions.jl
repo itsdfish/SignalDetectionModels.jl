@@ -150,3 +150,91 @@ function plot_zROC(model::AbstractSDT; config...)
         config...
     )
 end
+
+"""
+    plot_iso_sensitivity(model::AbstractSDT; config...)
+
+Generates a plot of sensitivity ('d') as a function of false alarm rate and hit rate.  
+ 
+# Arguments 
+
+- `model::AbstractSDT`: an abstract signal detection theory model 
+
+# Keywords 
+
+- `config...`: optional keyword arguments to configure plot
+
+# Example 
+
+```julia 
+using SignalDetectionModels
+model = SDT(; d = 2.0, c = .50, σₛ = 1.5, nₙ = 100)
+plot_iso_sensitivity(model)
+```
+"""
+function plot_iso_sensitivity(model::AbstractSDT; config...)
+    (; σₛ) = model
+    fars = range(0.001, 0.999, length = 80)
+    hrs = range(0.001, 0.999, length = 80)
+    ds = compute_d.(hrs, fars', σₛ)
+    return contour(
+        fars,
+        hrs,
+        ds,
+        grid = false,
+        leg = false,
+        lims = (0, 1),
+        xlabel = "False Alarm Rate",
+        ylabel = "Hit Rate",
+        colorbar_title = "d",
+        colorbar = true,
+        fill = true,
+        levels = 20,
+        framestyle = :box;
+        config...
+    )
+end
+
+"""
+    plot_iso_bias(model::AbstractSDT; config...)
+
+Generates a plot of bias ('c') as a function of false alarm rate and hit rate.  
+
+# Arguments 
+
+- `model::AbstractSDT`: an abstract signal detection theory model 
+
+# Keywords 
+
+- `config...`: optional keyword arguments to configure plot
+
+# Example 
+
+```julia 
+using SignalDetectionModels
+model = SDT(; d = 2.0, c = .50, σₛ = 1.5, nₙ = 100)
+plot_iso_bias(model)
+```
+"""
+function plot_iso_bias(model::AbstractSDT; config...)
+    (; σₛ) = model
+    fars = range(0.001, 0.999, length = 80)
+    hrs = range(0.001, 0.999, length = 80)
+    cs = compute_c.(hrs, fars', σₛ)
+    return contour(
+        fars,
+        hrs,
+        cs,
+        grid = false,
+        leg = false,
+        lims = (0, 1),
+        xlabel = "False Alarm Rate",
+        ylabel = "Hit Rate",
+        colorbar_title = "c",
+        colorbar = true,
+        fill = true,
+        levels = 20,
+        framestyle = :box;
+        config...
+    )
+end

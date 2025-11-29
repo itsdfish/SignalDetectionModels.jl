@@ -28,13 +28,13 @@ plot_zROC(model)
 ```@example plot
 using SignalDetectionModels
 model = SDT(; d = 2.0, c = 1, σₛ = 1.5, nₙ = 100)
-plot_distributions(model)
+plot_iso_bias(model)
 ```
 
-## Plot iso-discriminability
+## Plot iso-sensitivity
 
 ```@example plot
 using SignalDetectionModels
 model = SDT(; d = 2.0, c = 1, σₛ = 1.5, nₙ = 100)
-plot_distributions(model)
+plot_iso_sensitivity(model)
 ```
