@@ -20,7 +20,7 @@ abstract type AbstractSDT <: DiscreteMultivariateDistribution end
 # References 
 
 Stanislaw, H., & Todorov, N. (1999). Calculation of signal detection theory measures. 
-Behavior research methods, instruments, & computers, 31(1), 137-149.
+Behavior Research Methods, Instruments, & Computers, 31(1), 137-149.
 """
 struct SDT{T <: Real} <: AbstractSDT
     d::T

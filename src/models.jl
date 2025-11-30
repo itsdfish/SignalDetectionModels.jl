@@ -79,7 +79,15 @@ Computes criterion `c`.
 
 # Arguments
 
-- `model::AbstractSDT`: abstract signal detection theory model 
+- `model::AbstractSDT`: abstract signal detection theory model
+
+# Example 
+
+```julia
+using SignalDetectionModels
+model = SDT(; d = 2.0, c = 0.0, nₙ = 100)
+data = compute_c(model)
+```
 """
 function compute_c(model::AbstractSDT)
     (; σₛ) = model
@@ -113,6 +121,54 @@ function compute_c(hr::Real, far::Real, σₛ = 1.0)
     v2 = -σₛ / (1 + σₛ)
     dist = Normal(0, 1)
     return v1 * v2 * (invlogcdf(dist, log(hr)) + invlogcdf(dist, log(far)))
+end
+
+"""
+    compute_a(model::AbstractSDT)
+
+Computes area under the curve `a`. 
+
+# Arguments
+
+- `model::AbstractSDT`: abstract signal detection theory model 
+
+# Example 
+
+```julia
+using SignalDetectionModels
+model = SDT(; d = 2.0, c = 0.0, nₙ = 100)
+data = compute_a(model)
+```
+"""
+function compute_a(model)
+    hr = compute_hr(model)
+    far = compute_far(model)
+    return compute_a(hr, far)
+end
+
+"""
+    compute_a(hr::Real, far::Real)
+
+Computes area under the curve `a`. 
+
+# Arguments
+
+- `hr::Real`: hit rate 
+- `far::Real`: false alarm rate 
+
+# Example 
+
+```julia
+using SignalDetectionModels
+hr = .90
+far = .05
+compute_a(hr, far)
+```
+"""
+function compute_a(hr::Real, far::Real)
+    x1 = (hr - far)^2 + abs(hr - far)
+    x2 = 4 * max(hr, far) - 4 * hr * far
+    return 0.5 + sign(hr - far) * (x1 / x2)
 end
 
 """

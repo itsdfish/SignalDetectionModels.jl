@@ -114,6 +114,39 @@ end
     end
 end
 
+@safetestset "compute_a 1" begin
+    using Distributions
+    using SignalDetectionModels
+    using Test
+
+    hr = 0.50
+    far = 0.50
+    @test compute_a(hr, far) ≈ 0.50
+end
+
+# https://www.researchgate.net/publication/284714960_Signal_detection_theory_calculator
+@safetestset "compute_a 2" begin
+    using Distributions
+    using SignalDetectionModels
+    using Test
+
+    hr = 0.90
+    far = 0.05
+    @test compute_a(hr, far) ≈ 0.96 atol = 1e-3
+end
+
+@safetestset "compute_a 3" begin
+    using Distributions
+    using SignalDetectionModels
+    using Test
+
+    hr = 0.85
+    far = 0.10
+    @test compute_a(hr, far) ≈ 0.929 atol = 1e-3
+end
+
+# https://dprime-calculator.vercel.app/
+
 @safetestset "logpdf" begin
     using Distributions
     using Random

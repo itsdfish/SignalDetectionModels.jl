@@ -1,4 +1,3 @@
-
 ## Plot Distributions
 
 ```@example plot
